@@ -32,7 +32,7 @@ public class App {
         String command = "curl http://app:8080/allemployees";// inside docker use app locally use localhost
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
         processBuilder.start();
-        Thread.sleep(30000);
+        Thread.sleep(60000);
         ctx.close();
         System.out.println("app closed");
     }
