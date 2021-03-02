@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
@@ -15,12 +16,17 @@ public class App {
      */
     private static Connection con = null;
 
+    private static int travisDelay = 240000;//300000  5 mins
+    private static int databaseDelay = 30000;//30000 30 secs
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         connect();
-        SpringApplication.run(App.class, args);
+        ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
         System.out.println("http://localhost:8080/employee?id=10021");
         System.out.println("http://localhost/employees?id=10021");
+        Thread.sleep(travisDelay);
+        ctx.close();
+        System.out.println("app closed");
     }
 
     @RequestMapping("employee")
@@ -125,7 +131,7 @@ public class App {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start needed for travis but can be removed locally if db running
-                Thread.sleep(30000);
+                Thread.sleep(databaseDelay);
 
 //                Connect to database locally
 //                con = DriverManager.getConnection("jdbc:mysql://localhost:33060/employees?useSSL=true", "root", "example");

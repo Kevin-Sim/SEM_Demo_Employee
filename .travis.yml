@@ -21,7 +21,7 @@ jobs:
     - stage: test
       jdk: oraclejdk11
       after_success:
-        - curl http://localhost:8080/allemployees
+        - curl http://localhost/allemployees
 stages:
   #- unit tests
   #- integration tests
