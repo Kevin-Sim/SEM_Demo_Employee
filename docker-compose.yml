@@ -3,6 +3,8 @@ services:
   # Application Dockerfile is in same folder which is .
   app:
     build: .
+    ports:
+    - "8080:8080"
 
     # for debugging allows us to just repackage to get jar into docker app container
     # Needs Removed for travis
@@ -16,3 +18,8 @@ services:
     restart: always
     ports:
     - "33060:3306"
+
+  nginx:
+    build: web/.
+    ports:
+      - "8000:80"
