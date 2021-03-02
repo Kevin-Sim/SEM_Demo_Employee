@@ -113,4 +113,10 @@ public class Employee
                 ", manager='" + manager + '\'' +
                 '}';
     }
+
+    public String toMarkdown() {
+        String str = "";
+        str += "|" + emp_no + "|" + first_name + "|" + last_name + "|" +  title + "|";
+        return  str;
+    }
 }

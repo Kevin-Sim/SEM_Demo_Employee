@@ -1,5 +1,9 @@
 package com.napier.sem;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,15 +20,19 @@ public class App {
      */
     private static Connection con = null;
 
-    private static int travisDelay = 240000;//300000  5 mins
+    private static int travisDelay = 300000;//300000  5 mins
     private static int databaseDelay = 30000;//30000 30 secs
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         connect();
         ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
-        System.out.println("http://localhost:8080/employee?id=10021");
-        System.out.println("http://localhost/employees?id=10021");
+        System.out.println("http://localhost:8080/allemployees");
+        System.out.println("http://localhost/employees.html");
         Thread.sleep(travisDelay);
+        String command = "curl http://localhost:8080/allemployees";
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
+        processBuilder.start();
+        //Thread.sleep(300000);
         ctx.close();
         System.out.println("app closed");
     }
@@ -107,6 +115,7 @@ public class App {
                 employees.add(emp);
             }
             System.out.println("returned " + employees.size() + " details");
+            printEmployeeReport(employees, "All Employees (Truncated)", "employees.md");
             return employees;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -165,16 +174,22 @@ public class App {
     }
 
 
-//    public void displayEmployee(Employee emp) {
-//        if (emp != null) {
-//            System.out.println(
-//                    emp.emp_no + " "
-//                            + emp.first_name + " "
-//                            + emp.last_name + "\n"
-//                            + emp.title + "\n"
-//                            + "Salary:" + emp.salary + "\n"
-//                            + emp.dept_name + "\n"
-//                            + "Manager: " + emp.manager + "\n");
-//        }
-//    }
+    public static void printEmployeeReport(ArrayList<Employee> employees, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| emp_no | First Name | Surname | Title |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | \r\n");
+        for (Employee employee : employees) {
+            sb.append(employee.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + employees.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

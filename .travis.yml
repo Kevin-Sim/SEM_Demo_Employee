@@ -20,8 +20,19 @@ jobs:
   include:
     - stage: test
       jdk: oraclejdk11
-      after_success:
-        - curl http://localhost/allemployees
+      deploy:
+        provider: pages
+        test: skip
+        skip_cleanup: true
+        github_token: $GitHubPages_Deploy  # Set in the settings page of your repository, as a secure variable
+        local_dir: ${TRAVIS_BUILD_DIR}/tmp
+        target_branch: reports
+        keep_history: true
+        on:
+          branch: master
+        after_success:
+          - docker container cp sem_demo_app:./tmp ./
+
 stages:
   #- unit tests
   #- integration tests
