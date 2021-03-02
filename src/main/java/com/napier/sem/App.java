@@ -29,10 +29,10 @@ public class App {
         System.out.println("http://localhost:8080/allemployees");
         System.out.println("http://localhost/employees.html");
         Thread.sleep(travisDelay);
-        String command = "curl http://localhost:8080/allemployees";
+        String command = "curl http://app:8080/allemployees";
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
         processBuilder.start();
-        //Thread.sleep(300000);
+//        Thread.sleep(300000);
         ctx.close();
         System.out.println("app closed");
     }
