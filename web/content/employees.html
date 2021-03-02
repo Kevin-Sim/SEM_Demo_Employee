@@ -26,13 +26,20 @@
 </head>
 <body>
 <div class="showData">Waiting</div>
+<!--<div class="urldata">Waiting</div>-->
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
 
-    var URL = "http://" + window.location.hostname + ":8000/app/employee?id=" + id;
-    // var URL = "http://" + window.location.hostname + ":8080/employee?id=" + id;
+
+    //anything coming into /app/ is redirected to http://app:8080/ in nginx.conf
+    // var URL = "http://" + window.location.hostname + ":/app/employee?id=" + id;
+    var URL = "http://" + window.location.hostname + ":/app/allemployees";
+
+    //show url
+
+    // $(".urldata").html(URL);
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

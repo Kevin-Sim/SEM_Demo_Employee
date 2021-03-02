@@ -1,9 +1,29 @@
-sudo: required
-
 language: java
+
+sudo: false
+
+addons:
+  hosts:
+    - db
 
 services:
   - docker
 
-after_success:
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - docker-compose up --abort-on-container-exit
+
+before_script:
+  - mvn clean
+
+jobs:
+  include:
+    - stage: test
+      jdk: oraclejdk11
+      after_success:
+        - curl http://localhost:8080/allemployees
+stages:
+  #- unit tests
+  #- integration tests
+  - name: test
+    if: branch = master

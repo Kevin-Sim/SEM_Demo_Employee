@@ -66,6 +66,48 @@ public class App {
         }
     }
 
+    @RequestMapping("allemployees")
+    public ArrayList<Employee> getEmployees() {
+        System.out.println("Request for all employees");
+        try {
+            // Create an SQL statement
+            //Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            //could break this down into two SQL statements to retrieve employee details using joins
+            // then another query to get the manager
+
+            String strSelect = "SELECT * from employees " +
+                    "join titles on employees.emp_no = titles.emp_no limit 500;";
+
+            PreparedStatement stmt = con.prepareStatement(strSelect);
+//            stmt.setInt(1, Integer.parseInt(ID));
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery();
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<Employee> employees = new ArrayList<>();
+            while (rset.next()) {
+                Employee emp = new Employee();
+                emp.setEmp_no(rset.getInt("emp_no"));
+                emp.setFirst_name(rset.getString("first_name"));
+                emp.setLast_name(rset.getString("last_name"));
+                emp.setTitle(rset.getString("titles.title"));
+//                emp.setSalary(rset.getInt("s.salary"));
+//                emp.setDept_name(rset.getString("dep.dept_name"));
+//                emp.setManager(rset.getString("manager_firstname") + " " + rset.getString("manager_lastname"));
+
+                employees.add(emp);
+            }
+            System.out.println("returned " + employees.size() + " details");
+            return employees;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employees details");
+            return null;
+        }
+    }
     /**
      * Connect to the MySQL database.
      */
@@ -83,7 +125,7 @@ public class App {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start needed for travis but can be removed locally if db running
-                Thread.sleep(1000);
+                Thread.sleep(30000);
 
 //                Connect to database locally
 //                con = DriverManager.getConnection("jdbc:mysql://localhost:33060/employees?useSSL=true", "root", "example");
