@@ -2,6 +2,7 @@ language: java
 
 sudo: false
 
+# resolves db to localhost
 addons:
   hosts:
     - db
@@ -12,9 +13,12 @@ services:
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - docker-compose up --abort-on-container-exit
+# runs after install (build)
+after_success:
+  - docker container cp sem_demo_app:./tmp ./
 
-before_script:
-  - mvn clean
+#before_script:
+#  - mvn clean
 
 jobs:
   include:
@@ -31,8 +35,9 @@ jobs:
         on:
           branch: master
 
-      after_success:
-        - docker container cp sem_demo_app:./tmp ./
+#inline with - stage
+#      after_success:
+#        - docker container cp sem_demo_app:./tmp ./
 #       - docker container export sem_demo_app -o sem_demo_app.tgz>
 
 stages:

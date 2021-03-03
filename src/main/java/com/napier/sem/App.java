@@ -20,7 +20,6 @@ public class App {
      */
     private static Connection con = null;
 
-    private static int travisDelay = 0;//300000  5 mins
     private static int databaseDelay = 30000;//30000 30 secs
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -28,10 +27,14 @@ public class App {
         ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
         System.out.println("http://localhost:8080/allemployees");
         System.out.println("http://localhost/employees.html");
-        Thread.sleep(travisDelay);
+
+        /*
+         * Travis Deploy Call all the reports and close the app so that the build finishes
+         */
         String command = "curl http://app:8080/allemployees";// inside docker use app locally use localhost
         ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
         processBuilder.start();
+        //let process run before closing spring app so that travis exits build
         Thread.sleep(30000);
         ctx.close();
         System.out.println("app closed");
