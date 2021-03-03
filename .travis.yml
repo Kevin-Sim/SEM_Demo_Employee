@@ -18,25 +18,27 @@ before_script:
 
 jobs:
   include:
-    - stage: test
+    - stage: release
       jdk: oraclejdk11
       deploy:
         provider: pages
         test: skip
         skip_cleanup: true
         github_token: $GitHubPages_Deploy  # Set in the settings page of your repository, as a secure variable
-        local_dir: tmp
+        local_dir: ${TRAVIS_BUILD_DIR}/tmp
         target_branch: reports
         keep_history: true
         on:
-          branch: master
-#        after_success:
-#          - docker container cp sem_demo_app:./tmp ./
+          branch: week7World
+
+      after_success:
+        - docker container cp sem_demo_app:./tmp ./
+#       - docker container export sem_demo_app -o sem_demo_app.tgz>
 
 stages:
   #- unit tests
   #- integration tests
-  - name: test
+  - name: release
     if: branch = master
 
     #remove volumes

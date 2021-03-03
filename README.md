@@ -1,5 +1,5 @@
-# SEM_Demo
-Week3 Build Status [![Build Status](https://travis-ci.com/Kevin-Sim/SEM_Demo.svg?branch=week3)](https://travis-ci.com/Kevin-Sim/SEM_Demo)
+# SEM_Demo_Employee
+Master Build Status [![Build Status](https://travis-ci.com/github/Kevin-Sim/SEM_Demo_Employee.svg?branch=master)](https://travis-ci.com/github/Kevin-Sim/SEM_Demo_Employee)
 
 Add mysql db
 
