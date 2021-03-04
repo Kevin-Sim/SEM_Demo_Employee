@@ -1,5 +1,5 @@
 # SEM_Demo_Employee
-Master Build Status [![Build Status](https://travis-ci.com/github/Kevin-Sim/SEM_Demo_Employee.svg?branch=master)](https://travis-ci.com/github/Kevin-Sim/SEM_Demo_Employee)
+Master Build Status [![Build Status](https://travis-ci.com/Kevin-Sim/SEM_Demo_Employee.svg?branch=master)](https://travis-ci.com/Kevin-Sim/SEM_Demo_Employee)
 
 Add mysql db
 
@@ -14,9 +14,11 @@ git submodule update
 Fix from Lab Change MavenMySQL  dependency that we had last week to latest V8 from V5  
 Change The single line for the Maven assembly plugin to the three lines below (solves problems for some students)
 ```xml
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-assembly-plugin</artifactId>
-<version>3.3.0</version>
+
+ <groupId>org.apache.maven.plugins</groupId>
+ <artifactId>maven-assembly-plugin</artifactId>
+ <version>3.3.0</version>
+
 ```
 Add docker-compose 
 
@@ -45,7 +47,7 @@ Add dependency (better to use latest v8 but code needs changing as deprecated)
 </dependencies>
 ```
 If using v 8.018 change app code to
-```java
+```java 
 Class.forName("com.mysql.cj.jdbc.Driver");
 ```
 Update travis to 

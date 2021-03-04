@@ -93,7 +93,8 @@ public class App {
                     "    join salaries s on employees.emp_no = s.emp_no\n" +
                     "    join dept_emp de on employees.emp_no = de.emp_no\n" +
                     "    join departments d on d.dept_no = de.dept_no\n" +
-                    "where t.to_date = '9999-1-1' AND s.to_date = '9999-1-1' and d.dept_name = '" + department + "'";
+                    "where t.to_date = '9999-1-1' AND s.to_date = '9999-1-1' and d.dept_name = '" + department + "' " +
+                    "order by s.salary desc limit 500";
             PreparedStatement stmt = con.prepareStatement(query);
 //            stmt.setString(1, department);
 
