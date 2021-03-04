@@ -109,7 +109,7 @@ public class App {
                 emp.setFirst_name(rset.getString("first_name"));
                 emp.setLast_name(rset.getString("last_name"));
                 emp.setTitle(rset.getString("t.title"));
-//                emp.setSalary(rset.getInt("s.salary"));
+                emp.setSalary(rset.getInt("s.salary"));
                 emp.setDept_name(rset.getString("d.dept_name"));
 //                emp.setManager(rset.getString("manager_firstname") + " " + rset.getString("manager_lastname"));
                 employees.add(emp);
