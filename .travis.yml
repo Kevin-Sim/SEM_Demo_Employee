@@ -17,9 +17,6 @@ install:
 after_success:
   - docker container cp sem_demo_app:./tmp ./
 
-#before_script:
-#  - mvn clean
-
 jobs:
   include:
     - stage: release
@@ -35,11 +32,6 @@ jobs:
         on:
           branch: master
 
-#inline with - stage
-#      after_success:
-#        - docker container cp sem_demo_app:./tmp ./
-#       - docker container export sem_demo_app -o sem_demo_app.tgz>
-
 stages:
   #- unit tests
   #- integration tests
@@ -48,4 +40,5 @@ stages:
 
     #remove volumes
     #check connection string
-    #add delays
+    #add db delay
+    #add travis code to app to exit and produce reports

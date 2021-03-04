@@ -4,44 +4,60 @@
     <meta charset="UTF-8">
     <title>Employees by Title</title>
 
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <style>
-        th, td, p, input
-        {
-            font:14px Verdana;
+        th, td, p, input {
+            font: 14px Verdana;
         }
-        table, th, td
-        {
+
+        table, th, td {
             border: solid 1px #DDD;
             border-collapse: collapse;
             padding: 2px 3px;
             text-align: center;
         }
-        th
-        {
+
+        th {
             font-weight: bold;
         }
     </style>
 </head>
 <body>
+<form action="/employees.html">
+    <label for="department">Choose a Department:</label>
+    <select id="department" name="department">
+        <option value="Customer Service">Customer Service</option>
+        <option value="Development"> dev</option>
+        <option value="Finance"> </option>
+        <option value="Human Resources"> </option>
+        <option value="Marketing"> </option>
+        <option value="Production"> </option>
+        <option value="Quality Management"> </option>
+        <option value="Research"> </option>
+        <option value="Sales"> </option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
 <div class="showData">Waiting</div>
 <!--<div class="urldata">Waiting</div>-->
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var id = urlParams.get('id');
+    var department = urlParams.get('department');
 
 
     //anything coming into /app/ is redirected to http://app:8080/ in nginx.conf
     // var URL = "http://" + window.location.hostname + ":/app/employee?id=" + id;
-    var URL = "http://" + window.location.hostname + ":/app/allemployees";
+    var URL = "http://" + window.location.hostname + ":/app/getEmployeesByDept?department="+department;
 
     //show url
 
     // $(".urldata").html(URL);
 
-    $.getJSON(URL, function(data) {
+    $.getJSON(URL, function (data) {
         // EXTRACT VALUE FOR HTML HEADER.
         var col = [];
         for (var i = 0; i < data.length; i++) {

@@ -24,3 +24,6 @@ services:
     build: web/.
     ports:
       - "80:80"
+#    volumes:
+#    - .\target:/tmp
+#    - .\web\content:/usr/share/nginx/html
