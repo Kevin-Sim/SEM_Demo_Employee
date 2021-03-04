@@ -26,13 +26,14 @@ public class App {
         connect();
         ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
         System.out.println("http://localhost:8080/allemployees");
-        System.out.println("http://localhost/employees.html");
         System.out.println("http://localhost:8080/getEmployeesByDept?department=Development");
+        System.out.println("http://localhost/employees.html");
         /*
          * Travis Deploy Call all the reports and close the app so that the build finishes
          */
         String command = "curl http://app:8080/getEmployeesByDept?department=Development";// inside docker use app locally use localhost
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
+        //probably best to remove inheritIO to minimise travis log
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));//.inheritIO();
         processBuilder.start();
         //let process run then close spring app so that travis exits build
         Thread.sleep(30000);
