@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Employees by Title</title>
+    <title>Employees by Department</title>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -22,36 +22,53 @@
         th {
             font-weight: bold;
         }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 <body>
+<h1>Employees</h1>
 <form action="/employees.html">
     <label for="department">Choose a Department:</label>
     <select id="department" name="department">
         <option value="Customer Service">Customer Service</option>
-        <option value="Development"> dev</option>
-        <option value="Finance"> </option>
-        <option value="Human Resources"> </option>
-        <option value="Marketing"> </option>
-        <option value="Production"> </option>
-        <option value="Quality Management"> </option>
-        <option value="Research"> </option>
-        <option value="Sales"> </option>
+        <option value="Development" selected="selected">Development</option>
+        <option value="Finance">Finance</option>
+        <option value="Human Resources">Human Resources</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Production">Production</option>
+        <option value="Quality Management">Quality Management</option>
+        <option value="Research">Research</option>
+        <option value="Sales">Sales</option>
     </select>
+    </br>
+    <label for="salary">Minimum Salary:</label>
+    <input type="number" id="salary" name="salary" min="0" max="1000000" value="0">
+    </br>
     <input type="submit" value="Submit">
 </form>
-
-<div class="showData">Waiting</div>
+</br>
+<h2>Employee Data</h2>
+</br>
+<div class="showData">...</div>
 <!--<div class="urldata">Waiting</div>-->
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
     var department = urlParams.get('department');
-
+    var salary = urlParams.get('salary');
 
     //anything coming into /app/ is redirected to http://app:8080/ in nginx.conf
     // var URL = "http://" + window.location.hostname + ":/app/employee?id=" + id;
-    var URL = "http://" + window.location.hostname + ":/app/getEmployeesByDept?department="+department;
+    var URL = "http://" + window.location.hostname + ":/app/getEmployeesByDept?department=" + department + "&salary=" + salary;
 
     //show url
 

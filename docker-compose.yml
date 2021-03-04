@@ -25,5 +25,15 @@ services:
     ports:
       - "80:80"
 #    volumes:
-#    - .\target:/tmp
 #    - .\web\content:/usr/share/nginx/html
+#    - .\web:/etc/nginx/
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin:latest
+#    restart: always
+#    environment:
+#      PMA_HOST: db
+#      PMA_USER: root
+#      PMA_PASSWORD: example
+#    ports:
+#      - "8000:80"

@@ -32,8 +32,9 @@ public class App {
          * Travis Deploy Call all the reports and close the app so that the build finishes
          */
         String command = "curl http://app:8080/getEmployeesByDept?department=Development";// inside docker use app locally use localhost
+//        String command = "curl http://localhost:8080/getEmployeesByDept?department=Development";// inside docker use app locally use localhost
         //probably best to remove inheritIO to minimise travis log
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));//.inheritIO();
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" ")).inheritIO();
         processBuilder.start();
         //let process run then close spring app so that travis exits build
         Thread.sleep(30000);
@@ -85,16 +86,21 @@ public class App {
     }
 
     @RequestMapping("getEmployeesByDept")
-    public ArrayList<Employee> getEmployeesByDept(@RequestParam(value = "department") String department) {
+    public ArrayList<Employee> getEmployeesByDept(@RequestParam String department, @RequestParam (required = false) String salary) {
         try {
-            System.out.println("Request for all employees in " + department);
+            if(salary == null){
+                salary = "0";
+            }
+            System.out.println("Request for all employees in " + department + " with salary >= " + salary);
             String query = "select employees.emp_no, first_name, last_name, t.title, s.salary, d.dept_name from employees\n" +
                     "    join titles t on employees.emp_no = t.emp_no\n" +
                     "    join salaries s on employees.emp_no = s.emp_no\n" +
                     "    join dept_emp de on employees.emp_no = de.emp_no\n" +
                     "    join departments d on d.dept_no = de.dept_no\n" +
                     "where t.to_date = '9999-1-1' AND s.to_date = '9999-1-1' and d.dept_name = '" + department + "' " +
-                    "order by s.salary desc limit 500";
+                    "AND s.salary >=" + salary + " limit 500";
+
+            System.out.println(query);
             PreparedStatement stmt = con.prepareStatement(query);
 //            stmt.setString(1, department);
 
