@@ -1,6 +1,9 @@
 # SEM_Demo_Employee
 Master Build Status [![Build Status](https://travis-ci.com/Kevin-Sim/SEM_Demo_Employee.svg?branch=master)](https://travis-ci.com/Kevin-Sim/SEM_Demo_Employee)
 
+TODO 
+Add queries
+
 Add mysql db
 
 Add submodule (if cloning repository with submodule already there use last 2 commands only)
