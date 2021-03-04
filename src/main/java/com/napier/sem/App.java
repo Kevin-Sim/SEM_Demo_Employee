@@ -225,8 +225,8 @@ public class App {
     public static void printEmployeeReport(ArrayList<Employee> employees, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("# " + heading + "\r\n\r\n");
-        sb.append("| emp_no | First Name | Surname | Title |\r\n");
-        sb.append("| :--- | :--- | :--- | :--- | \r\n");
+        sb.append("| emp_no | First Name | Surname | Title | Salary | Department |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :--- | :--- |\r\n");
         for (Employee employee : employees) {
             sb.append(employee.toMarkdown() + "\r\n");
         }

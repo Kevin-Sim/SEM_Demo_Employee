@@ -116,7 +116,8 @@ public class Employee
 
     public String toMarkdown() {
         String str = "";
-        str += "|" + emp_no + "|" + first_name + "|" + last_name + "|" +  title + "|";
+        str += "|" + emp_no + "|" + first_name + "|" + last_name + "|" +  title + "|" +
+        salary + "|" +  dept_name + "|";
         return  str;
     }
 }
