@@ -31,11 +31,15 @@ jobs:
         keep_history: true
         on:
           branch: master
-
+    - stage: deploy
+      deploy:
+        provider: heroku
+        api_key: $heroku_api
+        app: sem-demo-app
 stages:
   #- unit tests
   #- integration tests
-  - name: release
+  - name: deploy
     if: branch = master
 
     #remove volumes
